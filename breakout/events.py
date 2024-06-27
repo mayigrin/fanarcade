@@ -17,7 +17,7 @@ def a_button_pressed(joystick):
 
 
 def check_joystick(sqs, joystick, status, player_status):
-    if status.is_game_over() and not joystick.get_button(4)> JOYSTICK_THRESHOLD:
+    if status.is_game_over() and not joystick.get_button(4) > JOYSTICK_THRESHOLD:
         key_down(pygame.K_TAB, None, status, None)
 
     if joystick.get_axis(0) < -JOYSTICK_THRESHOLD:

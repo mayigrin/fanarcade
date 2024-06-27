@@ -32,14 +32,9 @@ class GameManager:
         self.add_player = lambda i: None
         self.remove_player = lambda i: None
 
-    def switch_to_menu(self):
-        self.current_game = "menu"
-        self.last_awake = process_time()
-        self.EXIT = False
-
     def handle_cycle(self):
         if self.EXIT:
-            self.switch_to_menu()
+            self.EXIT = False
 
         self.check_events()
 
@@ -129,11 +124,14 @@ class GameManager:
         self.st.num_players -= 1
         self.remove_player(index)
 
+    def exit_to_menu(self):
+        self.EXIT = True
+        self.current_game = "menu"
+        self.last_awake = process_time()
+
     def check_event(self, event):
         if self.current_game == "menu" and process_time() - self.last_awake > self.st.time_to_screen_saver:
-            self.EXIT = True
-            self.last_awake = process_time()
-            return
+            self.exit_to_menu()
 
         # Handle joystick input
         if hasattr(event, "instance_id") and event.instance_id in self.joysticks:
@@ -162,7 +160,7 @@ class GameManager:
 
             # Press select on joycon (aka menu)
             if joystick.get_button(4) > JOYSTICK_THRESHOLD:
-                GameManager.EXIT = True
+                self.exit_to_menu()
 
             # Press up on joycon
             if joystick.get_axis(1) < -JOYSTICK_THRESHOLD:
