@@ -92,6 +92,7 @@ class Settings:
         self.menu_font = self.start_font
         self.menu_size = 20
         self.menu_color = (255, 255, 255)
+        self.button_offset = 30
         self.unselected_button_color = self.colors['none']
         self.selected_button_color = self.colors['tip']
 
