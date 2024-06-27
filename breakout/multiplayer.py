@@ -1,9 +1,9 @@
-import functions
+from breakout import functions
 import random
-import interface
-import screens, events
+from breakout import interface
+from breakout import screens, events
 import pygame
-from squares import Squares, Ball
+from breakout.squares import Squares, Ball
 
 
 class Multiplayer:

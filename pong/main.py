@@ -1,6 +1,6 @@
 import pygame
-import screens, functions, interface
-from multiplayer import Multiplayer
+from pong import screens, functions, interface
+from pong.multiplayer import Multiplayer
 from settings import Settings
 
 def play_pong():

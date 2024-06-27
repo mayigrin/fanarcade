@@ -1,7 +1,7 @@
 import requirements
 import pygame
-import functions, interface
-from multiplayer import Multiplayer
+from breakout import functions, interface
+from breakout.multiplayer import Multiplayer
 from settings import Settings
 
 def play_breakout():

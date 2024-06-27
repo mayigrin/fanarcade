@@ -1,8 +1,8 @@
-import functions
-import screens, events
+from tetris import functions
+from tetris import screens, events
 import pygame
 
-from squares import Squares
+from tetris.squares import Squares
 
 class Keyboard:
     """method for handling single player keyboard mode"""

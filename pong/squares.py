@@ -1,8 +1,6 @@
 import random
-import copy
-from random import randrange
 from pygame import Rect, draw
-from clock import Clock
+from pong.clock import Clock
 
 starting_position = 0
 

@@ -1,11 +1,10 @@
 import requirements
 import pygame
 import sys
-import functions, interface
-from keyboard import Keyboard
-from multiplayer import Multiplayer
+from tetris import functions, interface, AI_player
+from tetris.keyboard import Keyboard
+from tetris.multiplayer import Multiplayer
 from settings import Settings
-import AI_player
 
 def play_tetris():
     pass

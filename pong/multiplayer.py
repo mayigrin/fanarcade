@@ -1,8 +1,8 @@
-import functions
-import interface
-import screens, events
+from pong import functions
+from pong import interface
+from pong import screens, events
 import pygame
-from squares import Squares, Ball
+from pong.squares import Squares, Ball
 
 
 class Multiplayer:

@@ -1,8 +1,8 @@
-import functions
-import interface
-import screens, events
+from tetris import functions
+from tetris import interface
+from tetris import screens, events
 import pygame
-from squares import Squares
+from tetris.squares import Squares
 
 
 class Multiplayer:

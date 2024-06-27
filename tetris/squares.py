@@ -1,6 +1,6 @@
 from random import randrange
 from pygame import Rect, draw
-from clock import Clock
+from tetris.clock import Clock
 
 class Squares:
     """method for malipulating squares in the game"""
