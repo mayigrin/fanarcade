@@ -56,8 +56,6 @@ def play_ai_tetris(game):
         if status.is_game_active():
             controller.update()
         elif status.is_game_over():
-            interface.game_over(game.screen, game.st)
-        elif status.is_game_renew():
             AI_mode = status.newAI
             status.refresh()
             status.game_status = status.ACTIVE

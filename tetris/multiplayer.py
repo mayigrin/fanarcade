@@ -29,6 +29,7 @@ class Multiplayer:
         game.remove_player = self.remove_player
 
     def reset_squares(self):
+        self.squares = [self.empty_line.copy() for i in range(self.game.st.square_num_y)]
         self.player_statuses = [functions.PlayerStatus() for i in range(self.st.num_players)]
         self.sqs_list = [Squares(
             self.st,

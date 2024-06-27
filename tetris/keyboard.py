@@ -30,6 +30,7 @@ class Keyboard:
             self.adjust_for_AI()
 
     def reset_squares(self):
+        self.squares = [self.empty_line.copy() for i in range(self.game.st.square_num_y)]
         self.sqs = Squares(
             self.st,
             self.status,
