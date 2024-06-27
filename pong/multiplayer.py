@@ -68,7 +68,6 @@ class Multiplayer:
 
     def set_starting_positions(self):
         num_ticks = max(self.st.num_players // 2 + 1, 2)
-        print(num_ticks)
         for i in range(len(self.sqs_list)):
             sqs = self.sqs_list[i]
             tick = i // 2 + 1

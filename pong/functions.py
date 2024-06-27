@@ -22,7 +22,6 @@ class Functions:
             adjust_y = ((surface.get_height() + self.st.score_pos[1]) > self.st.screen_size[1])
             if adjust_y:
                 self.st.score_pos[1] -= self.st.score_font_adjust
-        print(self.st.score_pos)
         self.screen.blit(surface, self.st.score_pos)
 
 class Status:

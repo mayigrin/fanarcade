@@ -32,9 +32,9 @@ class Settings:
             'tip'  : (100, 100, 100)  # grey
         }
 
-        self.bg_color = (30, 30, 30) # black
+        self.bg_color = (0, 0, 0) # black
         self.square_color = (245, 245, 245) # white
-        self.space_color = (35, 35, 35) # slightly lighter than bg
+        self.space_color = (0, 0, 0) # slightly lighter than bg
 
         # shapes, dont touch this if you are not clear what this dose
         self.shapes = (
@@ -95,6 +95,7 @@ class Settings:
         self.button_offset = 30
         self.unselected_button_color = self.colors['none']
         self.selected_button_color = self.colors['tip']
+        self.time_to_screen_saver = 10
 
         # breakout/pong settings
         self.add_ball = 30

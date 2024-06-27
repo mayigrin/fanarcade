@@ -13,6 +13,7 @@ class Keyboard:
         self.screen = game.screen
 
         self.status = status
+        self.func = func
 
         self.AI = AI
         self.empty_line = ['none' for i in range(game.st.square_num_x)]
@@ -24,6 +25,9 @@ class Keyboard:
         self.joystick = None
 
         self.reset_squares()
+
+        if self.AI:
+            self.adjust_for_AI()
 
     def reset_squares(self):
         self.sqs = Squares(
@@ -45,7 +49,9 @@ class Keyboard:
 
     def update(self):
         if self.sqs.update():
-            screens.update_screen(self.screen, self.sqs, self.status, self.st, draw_shared_squares=True)
+            screens.update_screen(self.screen, self.sqs, None, self.status, self.st, draw_shared_squares=True)
+
+        self.game.render_screensaver_text()
 
     def adjust_for_AI(self):
         self.sqs.st.adjust_for_AI()

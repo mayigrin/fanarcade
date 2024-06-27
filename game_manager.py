@@ -35,14 +35,15 @@ class GameManager:
     def switch_to_menu(self):
         self.current_game = "menu"
         self.last_awake = process_time()
+        self.EXIT = False
 
     def handle_cycle(self):
-        self.check_events()
-
-        if GameManager.EXIT:
+        if self.EXIT:
             self.switch_to_menu()
 
-        current_time = self.time_to_screen_saver
+        self.check_events()
+
+        current_time = process_time()
 
         if self.current_game == "tetris":
             play_tetris(self)
@@ -53,11 +54,10 @@ class GameManager:
         elif self.current_game == "breakout":
             play_breakout(self)
 
-        elif current_time - self.last_awake > self.time_to_screen_saver:
+        elif current_time - self.last_awake > self.st.time_to_screen_saver:
             play_ai_tetris(self)
 
         else:
-            GameManager.EXIT = False
             self.show_menu()
 
     def show_menu(self):
@@ -110,6 +110,14 @@ class GameManager:
         y_pos = y_mid - surface.get_height()//2
         self.screen.blit(surface, (x_pos, y_pos))
 
+    def render_screensaver_text(self):
+        center_pos = self.st.screen_size[0]//2, self.st.screen_size[1]//2
+        text = f"Press any button to start"
+        font = pygame.font.SysFont(self.st.menu_font, self.st.start_size)
+        surface = font.render(text, True, self.st.menu_color)
+        pos = center_pos[0] - surface.get_width()//2, center_pos[1] - surface.get_height()//2
+        self.screen.blit(surface, pos)
+
     def player_join(self, pid):
         self.players.append(pid)
         self.st.num_players += 1
@@ -122,8 +130,14 @@ class GameManager:
         self.remove_player(index)
 
     def check_event(self, event):
+        if self.current_game == "menu" and process_time() - self.last_awake > self.st.time_to_screen_saver:
+            self.EXIT = True
+            self.last_awake = process_time()
+            return
+
         # Handle joystick input
         if hasattr(event, "instance_id") and event.instance_id in self.joysticks:
+
             joystick = self.joysticks[event.instance_id]
 
             # Press start on joycon (aka toggle player)
