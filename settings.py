@@ -96,6 +96,13 @@ class Settings:
         self.unselected_button_color = self.colors['none']
         self.selected_button_color = self.colors['tip']
 
+        # breakout settings
+        self.add_ball = 10
+        self.brick_color_names = ['red', 'green', 'blue', 'yellow', 'purple', 'cyan']
+        self.paddle = (
+            {'pos': ([0, 1], [0, 2], [0, -1]), 'color': 'white', 'rotate': 2}  # |
+        )
+
     def adjust_for_AI(self):
         self.time_drop = 0  # period to force drop
         self.time_drop_adjust = 0 # every score up, decrease drop time by this factor

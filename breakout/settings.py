@@ -6,6 +6,7 @@ class Settings:
         self.num_players = 0
 
         self.add_ball = 10
+        self.brick_color_names = ['red', 'green', 'blue', 'yellow', 'purple', 'cyan']
 
         # times or speed, in seconds, you can adjust this if youre not satisfied by the default
         self.time_drop = 0.8  # period to force drop

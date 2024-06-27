@@ -29,7 +29,7 @@ def game_start():
     screen = pygame.display.set_mode(st.screen_size)
     pygame.display.set_caption(st.screen_name)
 
-    func = functions.Fucntions(st, screen)
+    func = functions.Functions(st, screen)
 
     AI = AI_player.AI()
 

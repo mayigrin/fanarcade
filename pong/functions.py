@@ -1,6 +1,6 @@
 import pygame
 
-class Fucntions:
+class Functions:
     def __init__(self, st, screen):
         self.st = st
         self.screen = screen

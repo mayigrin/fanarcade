@@ -17,7 +17,7 @@ def game_start():
     screen = pygame.display.set_mode(st.screen_size)
     pygame.display.set_caption(st.screen_name)
 
-    func = functions.Fucntions(st, screens.get_func_surface(screen, st))
+    func = functions.Functions(st, screens.get_func_surface(screen, st))
 
     controller = Multiplayer(st, status, screen, func)
     status.game_status = status.NEWSTART

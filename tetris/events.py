@@ -54,15 +54,6 @@ def check_joystick(sqs, joystick, status, player_status):
         else:
             key_up(pygame.K_UP, player_status)
 
-    if joystick.get_button(4) > JOYSTICK_THRESHOLD:
-        key_down(pygame.K_q, sqs, status, player_status)
-
-    if joystick.get_button(9) > JOYSTICK_THRESHOLD:
-        print("PEW")
-
-    if joystick.get_button(10) > JOYSTICK_THRESHOLD:
-        print("pew")
-
 
 # deal with keys that are pressed down
 def key_down(key, sqs, status, player_status):

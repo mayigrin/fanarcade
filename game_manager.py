@@ -29,8 +29,8 @@ class GameManager:
         self.last_awake = process_time()
         self.time_to_screen_saver = 1
 
-        self.add_player = None
-        self.remove_player = None
+        self.add_player = lambda i: None
+        self.remove_player = lambda i: None
 
     def switch_to_menu(self):
         self.current_game = "menu"
@@ -45,16 +45,16 @@ class GameManager:
         current_time = self.time_to_screen_saver
 
         if self.current_game == "tetris":
-            play_tetris()
+            play_tetris(self)
 
         elif self.current_game == "pong":
-            play_pong()
+            play_pong(self)
 
         elif self.current_game == "breakout":
-            play_breakout()
+            play_breakout(self)
 
         elif current_time - self.last_awake > self.time_to_screen_saver:
-            play_ai_tetris()
+            play_ai_tetris(self)
 
         else:
             GameManager.EXIT = False
@@ -113,73 +113,75 @@ class GameManager:
     def player_join(self, pid):
         self.players.append(pid)
         self.st.num_players += 1
-        if self.add_player:
-            self.add_player()
+        self.add_player(pid)
 
     def player_leave(self, pid):
-        self.players.remove(pid)
+        index = self.players.index(pid)
+        self.players.pop(index)
         self.st.num_players -= 1
-        if self.remove_player:
-            self.remove_player()
+        self.remove_player(index)
+
+    def check_event(self, event):
+        # Handle joystick input
+        if hasattr(event, "instance_id") and event.instance_id in self.joysticks:
+            joystick = self.joysticks[event.instance_id]
+
+            # Press start on joycon (aka toggle player)
+            if joystick.get_button(6) > JOYSTICK_THRESHOLD:
+                # If player not registered, register
+                if event.instance_id not in self.players:
+                    self.player_join(event.instance_id)
+                else:
+                    self.player_leave(event.instance_id)
+
+            # Press R on joycon (aka join)
+            if joystick.get_button(10) > JOYSTICK_THRESHOLD:
+                # If player not registered, register
+                if event.instance_id not in self.players:
+                    self.player_join(event.instance_id)
+
+            # Press L on joycon (aka leave)
+            if joystick.get_button(9) > JOYSTICK_THRESHOLD:
+                # If registered, remove
+                if event.instance_id in self.players:
+                    self.player_leave(event.instance_id)
+
+            # Press select on joycon (aka back)
+            if joystick.get_button(4) > JOYSTICK_THRESHOLD:
+                GameManager.EXIT = True
+
+            # Press up on joycon
+            if joystick.get_axis(1) < -JOYSTICK_THRESHOLD:
+                self.selected = (self.selected - 1) % len(self.games)
+
+            # Press down on joycon
+            if joystick.get_axis(1) > JOYSTICK_THRESHOLD:
+                self.selected = (self.selected + 1) % len(self.games)
+
+            # Press A on joycon
+            if joystick.get_button(0) > JOYSTICK_THRESHOLD and self.st.num_players > 0:
+                self.current_game = self.games[self.selected]
+
+        if event.type == pygame.QUIT:
+            exit()
+
+        # Handle hotplugging
+        if event.type == pygame.JOYDEVICEADDED:
+            # This event will be generated when the program starts for every
+            # joystick, filling up the list without needing to create them manually.
+            joy = pygame.joystick.Joystick(event.device_index)
+            self.joysticks[joy.get_instance_id()] = joy
+
+        if event.type == pygame.JOYDEVICEREMOVED:
+            if event.instance_id in self.joysticks:
+                self.player_leave(event.instance_id)
+            del self.joysticks[event.instance_id]
 
     def check_events(self):
         # listen to every event and respond
         for event in pygame.event.get():
-            print(event.__dict__)
-            # Handle joystick input
-            if hasattr(event, "instance_id") and event.instance_id in self.joysticks:
-                joystick = self.joysticks[event.instance_id]
+            self.check_event(event)
 
-                # Press start on joycon (aka toggle player)
-                if joystick.get_button(6) > JOYSTICK_THRESHOLD:
-                    # If player not registered, register
-                    if event.instance_id not in self.players:
-                        self.player_join(event.instance_id)
-                    else:
-                        self.player_leave(event.instance_id)
-
-                # Press R on joycon (aka join)
-                if joystick.get_button(10) > JOYSTICK_THRESHOLD:
-                    # If player not registered, register
-                    if event.instance_id not in self.players:
-                        self.player_join(event.instance_id)
-
-                # Press L on joycon (aka leave)
-                if joystick.get_button(9) > JOYSTICK_THRESHOLD:
-                    # If registered, remove
-                    if event.instance_id in self.players:
-                        self.player_leave(event.instance_id)
-
-                # Press select on joycon (aka back)
-                if joystick.get_button(4) > JOYSTICK_THRESHOLD:
-                    GameManager.EXIT = True
-
-                # Press up on joycon
-                if joystick.get_axis(1) < -JOYSTICK_THRESHOLD:
-                    self.selected = (self.selected - 1) % len(self.games)
-
-                # Press down on joycon
-                if joystick.get_axis(1) > JOYSTICK_THRESHOLD:
-                    self.selected = (self.selected + 1) % len(self.games)
-
-                # Press A on joycon
-                if joystick.get_button(0) > JOYSTICK_THRESHOLD and self.st.num_players > 0:
-                    self.current_game = self.games[self.selected]
-
-            if event.type == pygame.QUIT:
-                exit()
-
-            # Handle hotplugging
-            if event.type == pygame.JOYDEVICEADDED:
-                # This event will be generated when the program starts for every
-                # joystick, filling up the list without needing to create them manually.
-                joy = pygame.joystick.Joystick(event.device_index)
-                self.joysticks[joy.get_instance_id()] = joy
-
-            if event.type == pygame.JOYDEVICEREMOVED:
-                if event.instance_id in self.joysticks:
-                    self.player_leave(event.instance_id)
-                del self.joysticks[event.instance_id]
 
 
 

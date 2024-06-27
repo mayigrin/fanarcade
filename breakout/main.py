@@ -4,27 +4,22 @@ from breakout import functions, interface
 from breakout.multiplayer import Multiplayer
 from settings import Settings
 
-def play_breakout():
-    pass
 
-def game_start():
+def play_breakout(game):
     # initialisations
     pygame.init()
     pygame.joystick.init()
 
     status = functions.Status()
-    st = Settings()
+    pygame.display.set_caption(game.st.screen_name)
 
-    screen = pygame.display.set_mode(st.screen_size)
-    pygame.display.set_caption(st.screen_name)
+    func = functions.Functions(game.st, game.screen)
 
-    func = functions.Fucntions(st, screen)
-
-    controller = Multiplayer(st, status, screen, func)
-    status.game_status = status.NEWSTART
+    controller = Multiplayer(game, status, func)
+    status.game_status = status.ACTIVE
 
     # main loop
-    while True:
+    while not game.EXIT:
 
         pygame.display.flip()
         controller.check_events()
@@ -32,9 +27,7 @@ def game_start():
         if status.is_game_active():
             controller.update()
         elif status.is_game_over():
-            interface.game_over(screen, st)
-        elif status.is_game_new():
-            interface.start(screen, st)
+            interface.game_over(game.screen, game.st)
         elif status.is_game_renew():
             status.refresh()
             status.game_status = status.ACTIVE
@@ -42,11 +35,7 @@ def game_start():
             controller.reset_squares()
             controller.set_starting_positions()
 
-            st = Settings()
+            game.st = Settings()
         else:
             raise RuntimeError # this should never happen
 
-
-if __name__ == "__main__":
-    requirements.check()
-    game_start()
