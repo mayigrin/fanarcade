@@ -1,7 +1,8 @@
 import pygame
-from pong import screens, functions, interface
+from pong import functions
 from pong.multiplayer import Multiplayer
 from settings import Settings
+import interface
 
 
 def play_pong(game):
@@ -27,7 +28,6 @@ def play_pong(game):
             controller.reset_squares()
             controller.set_starting_positions()
 
-            game.st = Settings()
         else:
             raise RuntimeError # this should never happen
 

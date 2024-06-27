@@ -1,10 +1,12 @@
 import requirements
 import pygame
 import sys
-from tetris import functions, interface, AI_player
+from tetris import functions, AI_player
 from tetris.keyboard import Keyboard
 from tetris.multiplayer import Multiplayer
 from settings import Settings
+import interface
+
 
 def play_tetris(game):
     status = functions.Status()
@@ -30,7 +32,6 @@ def play_tetris(game):
 
             controller.reset_squares()
 
-            game.st = Settings()
         else:
             raise RuntimeError  # this should never happen
 
@@ -63,7 +64,6 @@ def play_ai_tetris(game):
 
             controller.reset_squares()
 
-            game.st = Settings()
             if AI_mode:
                 status.AI = True
                 controller.adjust_for_AI()

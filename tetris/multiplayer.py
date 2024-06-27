@@ -1,5 +1,4 @@
 from tetris import functions
-from tetris import interface
 from tetris import screens, events
 import pygame
 from tetris.squares import Squares

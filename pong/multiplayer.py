@@ -1,5 +1,4 @@
 from pong import functions
-from pong import interface
 from pong import screens, events
 import pygame
 from pong.squares import Squares, Ball

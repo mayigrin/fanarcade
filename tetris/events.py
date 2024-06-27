@@ -15,8 +15,8 @@ def a_button_pressed(joystick):
 
 
 def check_joystick(sqs, joystick, status, player_status):
-    if status.is_game_new() and not b_button_pressed(joystick):
-        return
+    if status.is_game_over() and not joystick.get_button(4) > JOYSTICK_THRESHOLD:
+        key_down(pygame.K_TAB, None, status, None)
 
     if joystick.get_axis(0) < -JOYSTICK_THRESHOLD:
         key_down(pygame.K_LEFT, sqs, status, player_status)
@@ -39,20 +39,12 @@ def check_joystick(sqs, joystick, status, player_status):
         key_up(pygame.K_DOWN, player_status)
 
     button_pressed = False
-    ai_enabled = False
     for i in range(0,4):
         if joystick.get_button(i) > JOYSTICK_THRESHOLD:
             button_pressed = True
-            if status.is_game_new() and i == 0:
-                ai_enabled = True
-                key_down(pygame.K_a, sqs, status, player_status)
-            else:
-                key_down(pygame.K_UP, sqs, status, player_status)
+            key_down(pygame.K_UP, sqs, status, player_status)
     if not button_pressed:
-        if ai_enabled:
-            key_up(pygame.K_a, player_status)
-        else:
-            key_up(pygame.K_UP, player_status)
+        key_up(pygame.K_UP, player_status)
 
 
 # deal with keys that are pressed down

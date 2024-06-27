@@ -1,8 +1,8 @@
-import requirements
 import pygame
-from breakout import functions, interface
+from breakout import functions
 from breakout.multiplayer import Multiplayer
 from settings import Settings
+import interface
 
 
 def play_breakout(game):
@@ -28,8 +28,6 @@ def play_breakout(game):
 
             controller.reset_squares()
             controller.set_starting_positions()
-
-            game.st = Settings()
         else:
             raise RuntimeError # this should never happen
 

@@ -6,7 +6,7 @@ starting_position = 0
 
 
 class Ball:
-    def __init__(self, st, status, screen, sqs_list=None, vx=0, vy=1, controller=None):
+    def __init__(self, st, status, screen, sqs_list=None, vx=0, vy=-1, controller=None):
         self.st = st
         self.status = status
         self.screen = screen

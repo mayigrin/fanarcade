@@ -146,7 +146,7 @@ class GameManager:
                 if event.instance_id in self.players:
                     self.player_leave(event.instance_id)
 
-            # Press select on joycon (aka back)
+            # Press select on joycon (aka menu)
             if joystick.get_button(4) > JOYSTICK_THRESHOLD:
                 GameManager.EXIT = True
 

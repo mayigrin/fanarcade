@@ -166,13 +166,18 @@ class Settings:
     @staticmethod
     def adjust_game_over_size(self):
         adjust = True  # at least calculate surface once
-        while adjust:
-            font = pygame.font.SysFont(self.game_over_font, self.game_over_size)
-            surface = font.render(self.game_over, True, self.game_over_color)
-            # adjust font if it is too big
-            adjust = ((surface.get_width() + 2 * self.text_margin) > self.screen_size[0])
-            if adjust:
-                self.game_over_size -= self.text_adjust_factor
-            else:
-                return surface
+        game_over = ["Press MENU to return to menu", "Or press A to play again"]
+        for line in game_over:
+            while adjust:
+                font = pygame.font.SysFont(self.game_over_font, self.game_over_size)
+                surface = font.render(line, True, self.game_over_color)
+                # adjust font if it is too big
+                adjust = ((surface.get_width() + 2 * self.text_margin) > self.screen_size[0])
+                if adjust:
+                    self.game_over_size -= self.text_adjust_factor
+                else:
+                    break
+
+        return [font.render(line, True, self.game_over_color) for line in game_over]
+
 
