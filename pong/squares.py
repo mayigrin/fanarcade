@@ -6,7 +6,7 @@ starting_position = 0
 
 
 class Ball:
-    def __init__(self, st, status, screen, sqs_list=None, vx=0, vy=-1, controller=None):
+    def __init__(self, st, status, screen, sqs_list=None, vx=0, vy=1, controller=None):
         self.st = st
         self.status = status
         self.screen = screen
@@ -50,6 +50,7 @@ class Ball:
                 elif not self.valid_sq((self.y, self.x)):
                     self.vy = -1 * self.vy
                     self.vx = random.random() * 2.1 - 1
+                    self.status.score += 1
                 self.clock.update_move()
         return updated
 
@@ -104,10 +105,7 @@ class Squares:
         self.new_sq()
 
     # draw all squares
-    def draw_squares(self, draw_shared_squares=True):
-        if draw_shared_squares:
-            self.screen.fill(self.st.space_color)
-            self.draw_exist_sq()
+    def draw_squares(self, draw_shared_squares=False):
         self.draw_curr_sq()
 
     # update squares' information

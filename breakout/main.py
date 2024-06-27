@@ -6,13 +6,7 @@ from settings import Settings
 
 
 def play_breakout(game):
-    # initialisations
-    pygame.init()
-    pygame.joystick.init()
-
     status = functions.Status()
-    pygame.display.set_caption(game.st.screen_name)
-
     func = functions.Functions(game.st, game.screen)
 
     controller = Multiplayer(game, status, func)

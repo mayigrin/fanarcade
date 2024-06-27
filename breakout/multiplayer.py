@@ -45,7 +45,7 @@ class Multiplayer:
             screens.get_sqs_surface(self.screen, self.st),
             empty_line=self.empty_line,
             squares=self.squares,
-            player=i,
+            player=self.players[i],
             controller=self
         ) for i in range(self.st.num_players)]
         self.balls = [Ball(self.st, self.status, self.screen, self.sqs_list, self.squares, controller=self)]

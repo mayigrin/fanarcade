@@ -96,8 +96,8 @@ class Settings:
         self.unselected_button_color = self.colors['none']
         self.selected_button_color = self.colors['tip']
 
-        # breakout settings
-        self.add_ball = 10
+        # breakout/pong settings
+        self.add_ball = 30
         self.brick_color_names = ['red', 'green', 'blue', 'yellow', 'purple', 'cyan']
         self.paddle = (
             {'pos': ([0, 1], [0, 2], [0, -1]), 'color': 'white', 'rotate': 2}  # |
