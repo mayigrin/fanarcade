@@ -49,8 +49,6 @@ class Multiplayer:
         self.balls.append(Ball(self.st, self.status, self.screen, self.sqs_list, controller=self))
 
     def add_player(self, joystick_id):
-        self.st.num_players += 1
-        player_n = len(self.sqs_list)
         player_status = functions.PlayerStatus()
         self.sqs_list.append(Squares(
                         self.st,
@@ -59,7 +57,7 @@ class Multiplayer:
                         screens.get_sqs_surface(self.screen, self.st),
                         empty_line=self.empty_line,
                         squares=self.squares,
-                        player=player_n,
+                        player=joystick_id,
                         controller = self
         ))
         self.player_statuses.append(player_status)

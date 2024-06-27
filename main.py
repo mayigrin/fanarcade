@@ -16,7 +16,6 @@ def game_start():
 
     game_manager = GameManager(st, screen)
 
-
     # main loop
     while True:
 

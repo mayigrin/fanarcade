@@ -6,41 +6,16 @@ from tetris.keyboard import Keyboard
 from tetris.multiplayer import Multiplayer
 from settings import Settings
 
-def play_tetris():
-    pass
-
-def play_ai_tetris():
-    pass
-
-def game_start():
-    # initialisations
-    pygame.init()
-    pygame.joystick.init()
-
+def play_tetris(game):
     status = functions.Status()
-    st = Settings()
 
-    if "--AI" in sys.argv:
-        st.keyboard_mode = True
-        status.AI = True
-    if "--keyboard" in sys.argv:
-        st.keyboard_mode = True
+    func = functions.Functions(game.st, game.screen)
+    controller = Multiplayer(game, status, func)
 
-    screen = pygame.display.set_mode(st.screen_size)
-    pygame.display.set_caption(st.screen_name)
-
-    func = functions.Functions(st, screen)
-
-    AI = AI_player.AI()
-
-    if st.keyboard_mode:
-        controller = Keyboard(st, status, screen, func, AI)
-        status.game_status = status.ACTIVE
-    else:
-        controller = Multiplayer(st, status, screen, func, AI)
+    status.game_status = status.ACTIVE
 
     # main loop
-    while True:
+    while not game.EXIT:
 
         pygame.display.flip()
         controller.check_events()
@@ -48,9 +23,39 @@ def game_start():
         if status.is_game_active():
             controller.update()
         elif status.is_game_over():
-            interface.game_over(screen, st)
-        elif status.is_game_new():
-            interface.start(screen, st)
+            interface.game_over(game.screen, game.st)
+        elif status.is_game_renew():
+            status.refresh()
+            status.game_status = status.ACTIVE
+
+            controller.reset_squares()
+
+            game.st = Settings()
+        else:
+            raise RuntimeError  # this should never happen
+
+def play_ai_tetris(game):
+    status = functions.Status()
+    status.AI = True
+
+    status = functions.Status()
+
+    func = functions.Functions(game.st, game.screen)
+    AI = AI_player.AI()
+
+    controller = Keyboard(game, status, func, AI)
+    status.game_status = status.ACTIVE
+
+    # main loop
+    while not game.EXIT:
+
+        pygame.display.flip()
+        controller.check_events()
+
+        if status.is_game_active():
+            controller.update()
+        elif status.is_game_over():
+            interface.game_over(game.screen, game.st)
         elif status.is_game_renew():
             AI_mode = status.newAI
             status.refresh()
@@ -58,14 +63,9 @@ def game_start():
 
             controller.reset_squares()
 
-            st = Settings()
+            game.st = Settings()
             if AI_mode:
                 status.AI = True
                 controller.adjust_for_AI()
         else:
-            raise RuntimeError # this should never happen
-
-
-if __name__ == "__main__":
-    requirements.check()
-    game_start()
+            raise RuntimeError  # this should never happen
