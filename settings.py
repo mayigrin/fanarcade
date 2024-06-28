@@ -104,6 +104,9 @@ class Settings:
             {'pos': ([0, 1], [0, 2], [0, -1]), 'color': 'white', 'rotate': 2}  # |
         )
 
+        # snake settings
+        self.ball_ratio = 1/500
+
     def adjust_for_AI(self):
         self.time_drop = 0  # period to force drop
         self.time_drop_adjust = 0 # every score up, decrease drop time by this factor

@@ -6,6 +6,7 @@ from pygame import Rect, draw
 from breakout.main import play_breakout
 from pong.main import play_pong
 from tetris.main import play_ai_tetris, play_tetris
+from snake.main import play_snake
 
 JOYSTICK_THRESHOLD = .5
 
@@ -23,7 +24,7 @@ class GameManager:
         # options are menu, tetris, pong, breakout
         self.current_game = "menu"
 
-        self.games = ["tetris", "pong", "breakout"]
+        self.games = ["tetris", "pong", "breakout", "snake"]
         self.selected = 0
 
         self.last_awake = process_time()
@@ -48,6 +49,9 @@ class GameManager:
 
         elif self.current_game == "breakout":
             play_breakout(self)
+
+        elif self.current_game == "snake":
+            play_snake(self)
 
         elif current_time - self.last_awake > self.st.time_to_screen_saver:
             play_ai_tetris(self)
