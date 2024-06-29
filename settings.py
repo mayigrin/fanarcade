@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 class Settings:
@@ -130,16 +132,21 @@ class Settings:
         self.time_to_straight_drop = 0.3  # time to do another down straight
 
     def get_player_color(self, player):
-        if player == 0:
+        if player is None:
+            return random.choice(self.brick_color_names)
+
+        if player % 6 == 0:
             return 'red'
-        elif player == 1:
+        elif player % 6 == 1:
             return 'blue'
-        elif player == 2:
+        elif player % 6 == 2:
             return 'yellow'
-        elif player == 3:
+        elif player % 6 == 3:
             return 'green'
-        else:
+        elif player % 6 == 4:
             return 'purple'
+        elif player % 6 == 5:
+            return 'cyan'
 
     @staticmethod
     def get_game_size(self):

@@ -40,6 +40,9 @@ class Squares:
 
     # update squares' information
     def update(self):
+        if self.hidden:
+            return
+
         updated = False # for update screen
         # horizontal move
         if self.player_status.right:
@@ -79,9 +82,8 @@ class Squares:
     # renew current square
     def new_sq(self):
         x = random.randint(0, self.st.square_num_x)
-        y = random.randint(0, self.st.square_num_y)
-
-        self.curr_sq = [y, x]
+        index = len(self.controller.sqs_list) - 1
+        self.set_initial_pos(index, x)
 
         self.curr_color = self.st.get_player_color(self.player)
 
@@ -98,9 +100,7 @@ class Squares:
             if not self.eat():
                 self.tail.pop(0)
         else:
-            print([s.player for s in self.controller.sqs_list])
             active_players = [s for s in self.controller.sqs_list if not s.hidden]
-            print([a.player for a in active_players])
             if len(active_players) < 1:
                 self.status.game_status = self.status.GAMEOVER
             else:
@@ -150,7 +150,7 @@ class Squares:
 
         # check others crash
         for snake in self.controller.sqs_list:
-            if snake.player != self.player:
+            if snake.player != self.player and not snake.hidden and not self.hidden:
                 for bit in snake.tail + [snake.curr_sq]:
                     if bit[0] == sq[0] and bit[1] == sq[1]:
                         return False

@@ -25,4 +25,10 @@ def game_start():
 
 if __name__ == "__main__":
     requirements.check()
-    game_start()
+    try:
+        game_start()
+    except Exception as e:
+        print(e)
+        print("restarting")
+        game_start()
+
