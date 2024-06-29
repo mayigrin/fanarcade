@@ -73,8 +73,9 @@ class Multiplayer:
         for i in range(len(self.sqs_list)):
             sqs = self.sqs_list[i]
             tick = i // 2 + 1
-            for sq in sqs.tail + [sqs.curr_sq]:
-                sq[1] = int(tick * self.st.square_num_x / num_ticks)
+            x = int(tick * self.st.square_num_x / num_ticks)
+            sqs.set_initial_pos(i, x)
+
 
     def check_events(self):
         # listen to every event and respond

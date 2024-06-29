@@ -116,7 +116,18 @@ class Settings:
         self.time_before_drop = 0 # time to wait from one stop to drop
         self.time_quick_drop = 0 # minimum time interval to drop in quick mode
         self.time_move_quick = 0 # minimum time interval to move in quick mode
-        self.screen_name = 'Arcade: AI playing...'
+
+    def adjust_for_non_ai(self):
+        self.time_drop = 0.8  # period to force drop
+        self.time_drop_adjust = 0.99  # every score up, decrease drop time by this factor
+        self.time_stop = 0.5  # time player can adjust pos at bottom
+        self.time_move = 0.1  # minimum time interval to move
+        self.time_rotate = 0.2  # minimum time interval to rotate
+        self.time_to_quick = 0.3  # time interval to activate quick move mode
+        self.time_before_drop = 0.3  # time to wait from one stop to drop
+        self.time_quick_drop = 0.01  # minimum time interval to drop in quick mode
+        self.time_move_quick = 0.05  # minimum time interval to move in quick mode
+        self.time_to_straight_drop = 0.3  # time to do another down straight
 
     def get_player_color(self, player):
         if player == 0:

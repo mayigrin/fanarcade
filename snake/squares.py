@@ -24,6 +24,7 @@ class Squares:
         self.clock = Clock(st)
         self.player = player
         self.controller = controller
+        self.hidden = False
 
         self.new_sq()
 
@@ -34,7 +35,8 @@ class Squares:
                 for x, square in enumerate(row):
                     color = self.st.colors[self.squares[y][x]]
                     self.draw_square(y, x, color)
-        self.draw_curr_sq()
+        if not self.hidden:
+            self.draw_curr_sq()
 
     # update squares' information
     def update(self):
@@ -62,11 +64,8 @@ class Squares:
                 self.clock.update_move()
         return updated
 
-    # renew current square
-    def new_sq(self):
-        x = random.randint(0, self.st.square_num_x)
-
-        if self.player % 2:
+    def set_initial_pos(self, index, x):
+        if index % 2:
             y = 5
             self.player_status.down = True
             self.tail = [[y - 2, x], [y - 1, x]]
@@ -74,6 +73,13 @@ class Squares:
             y = self.st.square_num_y - 1 - 5
             self.player_status.up = True
             self.tail = [[y + 2, x], [y + 1, x]]
+
+        self.curr_sq = [y, x]
+
+    # renew current square
+    def new_sq(self):
+        x = random.randint(0, self.st.square_num_x)
+        y = random.randint(0, self.st.square_num_y)
 
         self.curr_sq = [y, x]
 
@@ -92,10 +98,13 @@ class Squares:
             if not self.eat():
                 self.tail.pop(0)
         else:
-            if len(self.controller.sqs_list) <= 1:
+            print([s.player for s in self.controller.sqs_list])
+            active_players = [s for s in self.controller.sqs_list if not s.hidden]
+            print([a.player for a in active_players])
+            if len(active_players) < 1:
                 self.status.game_status = self.status.GAMEOVER
             else:
-                self.controller.game.player_leave(self.player)
+                self.hidden = True
 
     def right(self):
         new_sq = self.curr_sq.copy()

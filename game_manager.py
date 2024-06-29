@@ -5,6 +5,7 @@ from pygame import Rect, draw
 
 from breakout.main import play_breakout
 from pong.main import play_pong
+from settings import Settings
 from tetris.main import play_ai_tetris, play_tetris
 from snake.main import play_snake
 
@@ -132,6 +133,7 @@ class GameManager:
         self.EXIT = True
         self.current_game = "menu"
         self.last_awake = process_time()
+        self.st.adjust_for_non_ai()
 
     def check_event(self, event):
         if self.current_game == "menu" and process_time() - self.last_awake > self.st.time_to_screen_saver:
