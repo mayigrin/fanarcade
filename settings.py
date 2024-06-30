@@ -30,13 +30,15 @@ class Settings:
             'purple': (255, 0, 255),
             'cyan' : (0, 255, 255),
 
-            'none' : (45, 45, 45),    # dark grey
-            'tip'  : (100, 100, 100)  # grey
+            'none' : (0, 0, 0),    # dark grey
+            'tip'  : (100, 100, 100),  # grey
+
+            'button': (45, 45, 45)
         }
 
         self.bg_color = (0, 0, 0) # black
-        self.square_color = (245, 245, 245) # white
-        self.space_color = (0, 0, 0) # slightly lighter than bg
+        self.space_color = (70, 70, 70) # white
+        self.square_color = (0, 0, 0) # slightly lighter than bg
 
         # shapes, dont touch this if you are not clear what this dose
         self.shapes = (
@@ -51,7 +53,7 @@ class Settings:
         self.shape_num = len(self.shapes)
 
         # positions
-        self.square_length = 5
+        self.square_length = 8
         self.square_num_x = 100
         self.square_num_y = 36
         self.square_space = 2
@@ -95,7 +97,7 @@ class Settings:
         self.menu_size = 20
         self.menu_color = (255, 255, 255)
         self.button_offset = 30
-        self.unselected_button_color = self.colors['none']
+        self.unselected_button_color = self.colors['button']
         self.selected_button_color = self.colors['tip']
         self.time_to_screen_saver = 10
 

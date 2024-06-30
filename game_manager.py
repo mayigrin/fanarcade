@@ -34,6 +34,24 @@ class GameManager:
         self.add_player = lambda i: None
         self.remove_player = lambda i: None
 
+    def draw_grid(self):
+        empty_line = ['none' for i in range(self.st.square_num_x)]
+        squares = [empty_line.copy() for i in range(self.st.square_num_y)]
+
+        for y, row in enumerate(squares):
+            for x, square in enumerate(row):
+                color = self.st.colors[squares[y][x]]
+                x_pos = x * (self.st.square_space + self.st.square_length)
+                y_pos = y * (self.st.square_space + self.st.square_length)
+                length = self.st.square_length
+                # adding borders borders
+                y_pos -= self.st.square_space
+                x_pos -= self.st.square_space
+                length += 2 * self.st.square_space
+
+                rect = Rect(x_pos + self.st.square_space, y_pos + self.st.square_space, length, length)
+                draw.rect(self.screen, color, rect)
+
     def handle_cycle(self):
         if self.EXIT:
             self.EXIT = False
