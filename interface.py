@@ -1,7 +1,6 @@
 import pygame
 
 def start(screen, st):
-    screen.fill(st.bg_color)
     num_lines = len(st.start_surface)
     for i in range(num_lines):
         surface = st.start_surface[i]
@@ -14,7 +13,6 @@ def start(screen, st):
         screen.blit(surface, (x, y))
 
 def game_over(screen, st):
-    screen.fill(st.bg_color)
     num_lines = len(st.game_over_surface)
     for i in range(num_lines):
         surface = st.game_over_surface[i]

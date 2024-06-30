@@ -2,8 +2,6 @@ import pygame
 
 def update_screen(screen, sqs, func, status, st, draw_shared_squares=False):
     """draw one screen"""
-    if draw_shared_squares:
-        screen.fill(st.bg_color)
     sqs.draw_squares(draw_shared_squares=draw_shared_squares)
     if draw_shared_squares:
         func.show_score(status.score)

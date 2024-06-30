@@ -3,8 +3,6 @@ import pygame
 
 def update_screen(screen, sqs, st, draw_shared_squares=False):
     """draw one screen"""
-    if draw_shared_squares:
-        screen.fill(st.bg_color)
     sqs.draw_squares(draw_shared_squares=draw_shared_squares)
 
 
